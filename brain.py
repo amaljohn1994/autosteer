@@ -55,9 +55,10 @@ def cleanVideo(labelPath,featurePath):
     cam.release()
     out.release()
     cv2.destroyAllWindows()
-    return cleanLabels,"cleanVideo.avi"
+    return count,cleanLabels,"cleanVideo.avi"
 
+    
 sensorLow,sensorHigh=setSensorLimits()
 labelPath=chooseLabelPath()
 featurePath=chooseFeaturePath()
-cleanLabels,cleanVideoPath=cleanVideo(labelPath,featurePath)
+total,cleanLabels,cleanVideoPath=cleanVideo(labelPath,featurePath)
