@@ -57,8 +57,17 @@ def cleanVideo(labelPath,featurePath):
     cv2.destroyAllWindows()
     return count,cleanLabels,"cleanVideo.avi"
 
-    
-sensorLow,sensorHigh=setSensorLimits()
-labelPath=chooseLabelPath()
-featurePath=chooseFeaturePath()
-total,cleanLabels,cleanVideoPath=cleanVideo(labelPath,featurePath)
+def setNetParams():
+    t=int(raw_input("Total number of layers for network:"))
+    netParams=np.zeros((1,t),'int32')
+    for i in range(0,t):
+        c=i+1
+        netParams[0,i]=int(raw_input("Enter no. of neurons in layer %d:"%c))
+    return netParams[0]
+
+
+#sensorLow,sensorHigh=setSensorLimits()
+#labelPath=chooseLabelPath()
+#featurePath=chooseFeaturePath()
+#total,cleanLabels,cleanVideoPath=cleanVideo(labelPath,featurePath)
+netParams=etNetParams()
