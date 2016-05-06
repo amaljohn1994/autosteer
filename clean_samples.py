@@ -18,6 +18,4 @@ class clean_samples:
 
     def clean(self):
         i=0
-        while (cam.isOpened()):
-            ret, frame = cam.read()
-            cv2.imshow('frame',frame
+        

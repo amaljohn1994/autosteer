@@ -1,4 +1,4 @@
-import clean_samples
+from clean_samples import clean_samples
 import Tkinter as tk
 import tkFileDialog as filedialog
 
