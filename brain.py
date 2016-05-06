@@ -5,8 +5,10 @@ import cv2
 import cv2.cv as cv
 import time
 
-sensorLow=210.0
-sensorHigh=250.0
+def setSensorLimits():
+    l=raw_input("Enter lower threshold value of sensor")
+    h=raw_input("Enter higher threshold value of sensor")
+    return float(l),float(h)
 
 def chooseFeaturePath():
     print "Select path for features"
@@ -55,6 +57,7 @@ def cleanVideo(labelPath,featurePath):
     cv2.destroyAllWindows()
     return cleanLabels,"cleanVideo.avi"
 
+sensorLow,sensorHigh=setSensorLimits()
 labelPath=chooseLabelPath()
 featurePath=chooseFeaturePath()
 cleanLabels,cleanVideoPath=cleanVideo(labelPath,featurePath)
