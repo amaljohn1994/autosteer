@@ -11,16 +11,13 @@ class clean_samples:
     sensorlow=0
     sensorhigh=0
 
-    def __init__(self):
-        sensorhigh=raw_input("Higher Threshold of sensor value:")
-        sensorlow=raw_input("Lower Threshold of sensor value")
-        root=tk.Tk()
-        root.withdraw()
-        print "Select video path"
-        videopath=filedialog.askopenfilename()
-        root=tk.Tk()
-        root.withdraw()
-        print "Select feature path"
-        labelpath=filedialog.askopenfilename()
+    def __init__(self,sensorpath,labelpath):
+        cam=cv2.VideoCapture(videopath)
+        labels=np.loadtxt(labelpath,delimiter=',')
 
-    
+
+    def clean(self):
+        i=0
+        while (cam.isOpened()):
+            ret, frame = cam.read()
+            cv2.imshow('frame',frame
