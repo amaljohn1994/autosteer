@@ -1,0 +1,38 @@
+CODE BLOCKS
+
+1.Remove unwanted samples
+- Inputs: Video(avi), Label file(txt), Sensor limits
+- Outputs: corrected video(avi), corrected label(txt)
+- Description: It should remove all the samples with no sensor reading, first 10 frames of the video(initalization lag), sensor readings are out of the given limits
+
+
+2.Convert to grayscale
+- Inputs:Color video(avi)
+- Outputs: Grayscale video(avi)
+
+3.Image processing algorithms
+- Inputs: Raw grayscale video(avi), Algorithm parameters
+- Outputs: Processed video(avi)
+
+4.Convert video to text
+- Inputs: Video(avi)
+- Outputs: Features(txt)
+
+5.Predict
+- Inputs:Test data(txt),NNET file(xml), NNET layersize(numpy)
+- Outputs:Time per prediction, Total time taken, Predicted labels(txt)
+
+6.Train
+- Inputs: Training data(txt),Training labels(txt),NNET layersize(numpy), BACKPROP parameters(txt/numpy)
+- Outputs: No. of iterations, Time taken for training, NNET file(xml)
+
+7.Perfomance Measure
+- Inputs: NNET file(xml),Data file(txt), Label file(txt)
+- Outputs: All the performance measure for that prediction
+
+8.Manual labelling of data
+- Inputs: Test data(avi), Individual labels
+- Outputs: Labels(txt)
+
+
+
