@@ -11,10 +11,11 @@ def setNetParams():
     for i in range(0,t):
         c=i+1
         netParams[0,i]=int(raw_input("Enter no. of neurons in layer %d:"%c))
+    print "Parameters set successfully..."
     return netParams[0]
 
 def setTrainParams():
-    scale=float(raw_input("Enter moment scale:"))
+    scale=float(raw_input("Enter scale:"))
     maxIter=int(raw_input("Enter maximum iterations:"))
     maxError=float(raw_input("Enter eror change to stop:"))
     return maxIter,maxError,scale
@@ -27,23 +28,25 @@ def trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures):
                    train_method = cv2.ANN_MLP_TRAIN_PARAMS_BACKPROP,
                    bp_dw_scale = scale,
                    bp_moment_scale = 0.0 )
+    print "Training started..."
     num_iter=model.train(cleanFeatures,cleanLabels,None,params=params)
-    print num_iter
+    print "Training completed in %d iterations..." %num_iter
     m=raw_input("Enter name of xml to save model:")
     model.save(m+".xml")
-    """ Should return time taken for training"""
+    print "File saved successfully..."
+
 
 """Write function to predict
 given path to xml of net,path to test data,
 return performance parameters, retrun time taken"""
 
 def loadLabels():
-    fileName=raw_input("Enter filename containing labels")
+    fileName=raw_input("Enter filename containing labels:")
     cleanLabels=np.load(fileName)
     return cleanLabels['arr_0']
 
 def loadFeatures():
-    fileName=raw_input("Enter filename containing features")
+    fileName=raw_input("Enter filename containing features:")
     cleanFeatures=np.load(fileName)
     return cleanFeatures['arr_0']
 
