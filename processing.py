@@ -7,6 +7,7 @@ import time
 import matplotlib.pyplot as plt
 
 def setLabel(cleanLabels,sensorLow,sensorHigh):
+    print "Setting Labels..."
     div=(sensorHigh-sensorLow)/4
     finalLabels=np.zeros((0,4),'float')
     for label in cleanLabels:
@@ -20,6 +21,7 @@ def setLabel(cleanLabels,sensorLow,sensorHigh):
             a=[-1,-1,-1,1]
         temp=np.vstack((finalLabels,a))
         finalLabels=temp
+    print "Done setting labels"
     return finalLabels
 
 def setSensorLimits():
@@ -50,6 +52,7 @@ def cleanVideo(labelPath,featurePath,hor,ver):
     labels=np.loadtxt(labelPath,delimiter=',')
     i=-1
     count=0
+    print "Processing begun.."
     while(cam.isOpened()):
         i=i+1
         ret, frame = cam.read()
@@ -68,7 +71,8 @@ def cleanVideo(labelPath,featurePath,hor,ver):
             break
         cleanLabels=temp
         cleanFeatures=temp2
-    plot(cleanLabels)
+    print "Processing Completed..."
+    #plot(cleanLabels)
     cam.release()
     cv2.destroyAllWindows()
     return count,cleanLabels,cleanFeatures

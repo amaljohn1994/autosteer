@@ -15,8 +15,8 @@ def setNetParams():
     return netParams[0]
 
 def setTrainParams():
-    scale=float(raw_input("Enter scale:"))
-    maxIter=int(raw_input("Enter maximum iterations:"))
+    scale=float(raw_input("Enter scale(=0.001):"))
+    maxIter=int(raw_input("Enter maximum iterations(300):"))
     maxError=float(raw_input("Enter eror change to stop:"))
     return maxIter,maxError,scale
 
@@ -36,17 +36,14 @@ def trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures):
     print "File saved successfully..."
     return m+".xml"
 
-
-"""Write function to predict
-given path to xml of net,path to test data,
-return performance parameters, retrun time taken"""
-
 def predict(fileName,layers):
     nnet=cv2.ANN_MLP()
     nnet.create(layers)
     nnet.load(fileName)
     correctLabels=loadCorrectLabels()
     trainingFeatures=loadTrainingFeatures()
+    i=0
+    count=0
     for feature in trainingFeatures:
         prediction=np.zeros((1,4),'float')
         test=np.zeros((0,76800),'float')
@@ -54,12 +51,11 @@ def predict(fileName,layers):
         test=test+0.00
         nnet.predict(test,prediction)
         prediction=prediction.argmax(-1)+1
+        if prediction==correctLabels[i]
+            count=count+1
         print 'Prediction:',prediction
-
-
-
-
-
+        i=i+1
+    print (count/i)*100
 
 def loadLabels():
     fileName=raw_input("Enter filename containing labels(.npz reqd)):")
@@ -80,7 +76,6 @@ def loadTrainingFeatures():
     fileName=raw_input("Enter filename containing training features(.npz reqd):")
     cleanFeatures=np.load(fileName)
     return cleanFeatures['arr_0']
-
 
 netParams=setNetParams()
 maxIter,maxError,scale=setTrainParams()
