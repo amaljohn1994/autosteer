@@ -17,7 +17,6 @@ def chooseFeaturePath():
     a=filedialog.askopenfilename()
     return a
 
-
 def chooseLabelPath():
     print "Select path for labels"
     root=tk.Tk()
@@ -25,57 +24,41 @@ def chooseLabelPath():
     a=filedialog.askopenfilename()
     return a
 
-def convertFeature(cleanVideoPath):
-    print cleanVideoPath
-    cam = cv2.VideoCapture(cleanVideoPath)
-    final=np.zeros((1,0),'float')
-    a=np.zeros((1,0),'float')
-    while(cam.isOpened()):
-        ret,frame=cam.read()
-        cv2.imshow('frame',frame)
-        if ret==True:
-            temp=np.reshape(frame,(1,len(frame)*len(frame[0])))
-            print temp.shape
-            a=np.vstack(final,temp)
-            final=a
-    print final.shape
-    cam.release()
-    final=final+0.0
-    return final
-
-def cleanVideo(labelPath,featurePath):
+def cleanVideo(labelPath,featurePath,hor,ver):
     labels=np.zeros((0,1),'float')
+    size=hor*ver
     cleanLabels=np.zeros((0,1),'float')
+    cleanFeatures=np.zeros((0,size),'float')
     cam = cv2.VideoCapture(featurePath)
     labels=np.loadtxt(labelPath,delimiter=',')
     i=-1
     count=0
-    fourcc = cv2.cv.CV_FOURCC(*'XVID')
-    out = cv2.VideoWriter('cleanedVideo.avi',fourcc, 20.0, (640,480))
     while(cam.isOpened()):
         i=i+1
+        print i
         ret, frame = cam.read()
         if ret==True:
             gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-            #cv2.imshow('frame',gray)
             if (labels[i]<sensorLow)|(labels[i]>sensorHigh):
                 continue
             temp=np.vstack((cleanLabels,labels[i]))
+            a=np.reshape(gray,(1,size))
+            temp2=np.vstack((cleanFeatures,a))
+            print cleanLabels.shape
             count=count+1
-            out.write(gray)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         else:
             break
         cleanLabels=temp
-    # Release everything if job is finished
+        cleanFeatures=temp2
     cam.release()
-    out.release()
     cv2.destroyAllWindows()
-    return count,cleanLabels,"cleanVideo.avi"
+    print cleanFeatures.shape
+    print cleanLabels.shape
+    return count,cleanLabels,cleanFeatures
 
 sensorLow,sensorHigh=setSensorLimits()
 labelPath=chooseLabelPath()
 featurePath=chooseFeaturePath()
-total,cleanLabels,cleanVideoPath=cleanVideo(labelPath,featurePath)
-cleanFeatures=convertFeature(cleanVideoPath)
+total,cleanLabels,cleanFeatures=cleanVideo(labelPath,featurePath,640,480)
