@@ -75,11 +75,11 @@ def cleanVideo(labelPath,featurePath,hor,ver):
     return count,cleanLabels,cleanFeatures
 
 def saveFeatures(features):
-    fileName=raw_input("Enter the filename to save features to:")
+    fileName=raw_input("Enter the filename to save features to(no ext. reqd):")
     np.savez(fileName,features)
 
 def saveLabels(labels):
-    fileName=raw_input("Enter the filename to save labels to:")
+    fileName=raw_input("Enter the filename to save labels to(no ext. reqd):")
     np.savez(fileName,labels)
 
 def plot(labels):
@@ -87,12 +87,14 @@ def plot(labels):
     t=np.arange(0.0,l,1)
     plt.plot(t,labels)
     plt.show()
-    plt.savefig("test.png")
+    name=raw_input("Enter name to store plot(with .png):")
+    plt.savefig(name)
 
-sensorLow,sensorHigh=setSensorLimits()
+
 labelPath=chooseLabelPath()
 featurePath=chooseFeaturePath()
 total,cleanLabels,cleanFeatures=cleanVideo(labelPath,featurePath,320,240)
+sensorLow,sensorHigh=setSensorLimits()
 finalLabels=setLabel(cleanLabels,sensorLow,sensorHigh)
 saveFeatures(cleanFeatures)
 saveLabels(finalLabels)
