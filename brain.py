@@ -14,21 +14,23 @@ def setNetParams():
     return netParams[0]
 
 def setTrainParams():
-    moment=float(raw_input("Enter moment scale:"))
+    scale=float(raw_input("Enter moment scale:"))
     maxIter=int(raw_input("Enter maximum iterations:"))
     maxError=float(raw_input("Enter eror change to stop:"))
-    return maxIter,maxError,moment
+    return maxIter,maxError,scale
 
-def trainNet(netParams,maxIter,maxError,moment,cleanLabels,cleanFeatures):
+def trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures):
     model=cv2.ANN_MLP()
     model.create(netParams)
     criteria = (cv2.TERM_CRITERIA_COUNT | cv2.TERM_CRITERIA_EPS, maxIter, maxError)
     params = dict(term_crit = criteria,
                    train_method = cv2.ANN_MLP_TRAIN_PARAMS_BACKPROP,
-                   bp_dw_scale = moment,
+                   bp_dw_scale = scale,
                    bp_moment_scale = 0.0 )
     num_iter=model.train(cleanFeatures,cleanLabels,None,params=params)
     print num_iter
+    m=raw_input("Enter name of xml to save model:")
+    model.save(m)
     """ Should return time taken for training"""
 
 """Write function to predict
@@ -38,5 +40,5 @@ return performance parameters, retrun time taken"""
 
 
 netParams=setNetParams()
-maxIter,maxError,moment=setTrainParams()
-trainNet(netParams,maxIter,maxError,moment,cleanLabels,cleanFeatures)
+maxIter,maxError,scale=setTrainParams()
+trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures)
