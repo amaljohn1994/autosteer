@@ -29,7 +29,14 @@ def trainNet(netParams,maxIter,maxError,moment,cleanLabels,cleanFeatures):
                    bp_moment_scale = 0.0 )
     num_iter=model.train(cleanFeatures,cleanLabels,None,params=params)
     print num_iter
+    """ Should return time taken for training"""
 
+"""Write function to predict
+given path to xml of net,path to test data,
+return performance parameters, retrun time taken"""
+
+
+    
 netParams=setNetParams()
 maxIter,maxError,moment=setTrainParams()
 trainNet(netParams,maxIter,maxError,moment,cleanLabels,cleanFeatures)
