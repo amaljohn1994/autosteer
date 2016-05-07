@@ -68,7 +68,6 @@ def cleanVideo(labelPath,featurePath,hor,ver):
             break
         cleanLabels=temp
         cleanFeatures=temp2
-    print cleanLabels.shape
     plot(cleanLabels)
     cam.release()
     cv2.destroyAllWindows()
@@ -90,11 +89,10 @@ def plot(labels):
     name=raw_input("Enter name to store plot(with .png):")
     plt.savefig(name)
 
-
+sensorLow,sensorHigh=setSensorLimits()
 labelPath=chooseLabelPath()
 featurePath=chooseFeaturePath()
 total,cleanLabels,cleanFeatures=cleanVideo(labelPath,featurePath,320,240)
-sensorLow,sensorHigh=setSensorLimits()
 finalLabels=setLabel(cleanLabels,sensorLow,sensorHigh)
 saveFeatures(cleanFeatures)
 saveLabels(finalLabels)
