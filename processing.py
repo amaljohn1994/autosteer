@@ -43,7 +43,6 @@ def cleanVideo(labelPath,featurePath,hor,ver):
             temp=np.vstack((cleanLabels,labels[i]))
             a=np.reshape(gray,(1,size))
             temp2=np.vstack((cleanFeatures,a))
-            print cleanLabels.shape
             count=count+1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -53,11 +52,19 @@ def cleanVideo(labelPath,featurePath,hor,ver):
         cleanFeatures=temp2
     cam.release()
     cv2.destroyAllWindows()
-    print cleanFeatures.shape
-    print cleanLabels.shape
     return count,cleanLabels,cleanFeatures
+
+def saveFeatures(features):
+    fileName=raw_input("Enter the filename to save features to:")
+    np.savetxt(fileName,features,delimiter=',')
+
+def saveLabels(labels):
+    fileName=raw_input("Enter the filename to save labels to:")
+    np.savetxt(fileName,labels,delimiter=',')
 
 sensorLow,sensorHigh=setSensorLimits()
 labelPath=chooseLabelPath()
 featurePath=chooseFeaturePath()
 total,cleanLabels,cleanFeatures=cleanVideo(labelPath,featurePath,640,480)
+saveFeatures(cleanFeatures)
+saveLabels(cleanLabels)
