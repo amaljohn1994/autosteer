@@ -5,6 +5,12 @@ import cv2
 import cv2.cv as cv
 import time
 
+"""write function to resize video"""
+
+"""write function to segregate the labels"""
+
+
+
 def setSensorLimits():
     l=raw_input("Enter lower threshold value of sensor")
     h=raw_input("Enter higher threshold value of sensor")
