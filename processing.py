@@ -10,13 +10,13 @@ def setLabel(cleanLabels,sensorLow,sensorHigh):
     finalLabels=np.zeros((0,4),'float')
     for label in cleanLabels:
         if sensorLow<=label<sensorLow+div:
-            a=[1,0,0,0]
+            a=[1,-1,-1,-1]
         if sensorLow+div<=label<sensorLow+(2*div):
-            a=[0,1,0,0]
+            a=[-1,1,-1,-1]
         if sensorLow+(2*div)<=label<sensorHigh-div:
-            a=[0,0,1,0]
+            a=[-1,-1,1,-1]
         if sensorHigh-div<=label<=sensorHigh:
-            a=[0,0,0,1]
+            a=[-1,-1,-1,1]
         temp=np.vstack((finalLabels,a))
         finalLabels=temp
     return finalLabels
