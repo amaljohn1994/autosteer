@@ -36,7 +36,7 @@ given path to xml of net,path to test data,
 return performance parameters, retrun time taken"""
 
 
-    
+
 netParams=setNetParams()
 maxIter,maxError,moment=setTrainParams()
 trainNet(netParams,maxIter,maxError,moment,cleanLabels,cleanFeatures)
