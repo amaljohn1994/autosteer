@@ -40,7 +40,30 @@ def trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures):
 given path to xml of net,path to test data,
 return performance parameters, retrun time taken"""
 
-def loadLabels():(
+def predict():
+
+    layers=setNetParams
+    nnet=cv2.ANN_MLP()
+    nnet.create(layers)
+    fileName=raw_input("Enter file name of xml(ext not reqd):")
+    nnet.load(fileName+".xml")
+    correctLabels=loadCorrectLabels()
+    trainingFeatures=loadTrainingFeatures()
+    for feature in trainingFeatures:
+        prediction=np.zeros((1,4),'float')
+        test=np.zeros((0,76800),'float')
+        test=feature.reshape((1,76800))
+        test=test+0.00
+        nnet.predict(test,prediction)
+        prediction=prediction.argmax(-1)+1
+        print 'Prediction:',prediction
+
+
+
+
+
+
+def loadLabels():
     fileName=raw_input("Enter filename containing labels(.npz reqd)):")
     cleanLabels=np.load(fileName)
     return cleanLabels['arr_0']
@@ -50,9 +73,20 @@ def loadFeatures():
     cleanFeatures=np.load(fileName)
     return cleanFeatures['arr_0']
 
+def loadCorrectLabels():
+    fileName=raw_input("Enter filename containing correct labels(.npz reqd)):")
+    cleanLabels=np.load(fileName)
+    return cleanLabels['arr_0']
+
+def loadTrainingFeatures():
+    fileName=raw_input("Enter filename containing training features(.npz reqd):")
+    cleanFeatures=np.load(fileName)
+    return cleanFeatures['arr_0']
+
 
 netParams=setNetParams()
 maxIter,maxError,scale=setTrainParams()
 cleanLabels=loadLabels()
 cleanFeatures=loadFeatures()
 trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures)
+predict()
