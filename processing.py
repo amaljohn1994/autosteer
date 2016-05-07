@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 import cv2.cv as cv
 import time
+import matplotlib.pyplot as plt
 
 def setLabel(cleanLabels,sensorLow,sensorHigh):
     div=(sensorHigh-sensorLow)/4
@@ -67,6 +68,8 @@ def cleanVideo(labelPath,featurePath,hor,ver):
             break
         cleanLabels=temp
         cleanFeatures=temp2
+    print cleanLabels.shape
+    plot(cleanLabels)
     cam.release()
     cv2.destroyAllWindows()
     return count,cleanLabels,cleanFeatures
@@ -78,6 +81,13 @@ def saveFeatures(features):
 def saveLabels(labels):
     fileName=raw_input("Enter the filename to save labels to:")
     np.savez(fileName,labels)
+
+def plot(labels):
+    l=len(labels)
+    t=np.arange(0.0,l,1)
+    plt.plot(t,labels)
+    plt.show()
+    plt.savefig("test.png")
 
 sensorLow,sensorHigh=setSensorLimits()
 labelPath=chooseLabelPath()
