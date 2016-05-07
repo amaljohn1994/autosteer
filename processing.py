@@ -5,15 +5,25 @@ import cv2
 import cv2.cv as cv
 import time
 
-"""write function to resize video"""
-
-"""write function to segregate the labels"""
-
-
+def setLabel(cleanLabels,sensorLow,sensorHigh):
+    div=(sensorHigh-sensorLow)/4
+    finalLabels=np.zeros((0,4),'float')
+    for label in cleanLabels:
+        if sensorLow<=label<sensorLow+div:
+            a=[1,0,0,0]
+        if sensorLow+div<=label<sensorLow+(2*div):
+            a=[0,1,0,0]
+        if sensorLow+(2*div)<=label<sensorHigh-div:
+            a=[0,0,1,0]
+        if sensorHigh-div<=label<=sensorHigh:
+            a=[0,0,0,1]
+        temp=np.vstack((finalLabels,a))
+        finalLabels=temp
+    return finalLabels
 
 def setSensorLimits():
-    l=raw_input("Enter lower threshold value of sensor")
-    h=raw_input("Enter higher threshold value of sensor")
+    l=raw_input("Enter lower threshold value of sensor:")
+    h=raw_input("Enter higher threshold value of sensor:")
     return float(l),float(h)
 
 def chooseFeaturePath():
@@ -43,7 +53,8 @@ def cleanVideo(labelPath,featurePath,hor,ver):
         i=i+1
         ret, frame = cam.read()
         if ret==True:
-            gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+            frame2=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+            gray=cv2.resize(frame2,None,fx=0.5,fy=0.5)
             if (labels[i]<sensorLow)|(labels[i]>sensorHigh):
                 continue
             temp=np.vstack((cleanLabels,labels[i]))
@@ -62,15 +73,16 @@ def cleanVideo(labelPath,featurePath,hor,ver):
 
 def saveFeatures(features):
     fileName=raw_input("Enter the filename to save features to:")
-    np.savetxt(fileName,features,delimiter=',')
+    np.savez(fileName,features)
 
 def saveLabels(labels):
     fileName=raw_input("Enter the filename to save labels to:")
-    np.savetxt(fileName,labels,delimiter=',')
+    np.savez(fileName,labels)
 
 sensorLow,sensorHigh=setSensorLimits()
 labelPath=chooseLabelPath()
 featurePath=chooseFeaturePath()
-total,cleanLabels,cleanFeatures=cleanVideo(labelPath,featurePath,640,480)
+total,cleanLabels,cleanFeatures=cleanVideo(labelPath,featurePath,320,240)
+finalLabels=setLabel(cleanLabels,sensorLow,sensorHigh)
 saveFeatures(cleanFeatures)
-saveLabels(cleanLabels)
+saveLabels(finalLabels)
