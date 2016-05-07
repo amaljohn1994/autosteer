@@ -30,15 +30,26 @@ def trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures):
     num_iter=model.train(cleanFeatures,cleanLabels,None,params=params)
     print num_iter
     m=raw_input("Enter name of xml to save model:")
-    model.save(m)
+    model.save(m+".xml")
     """ Should return time taken for training"""
 
 """Write function to predict
 given path to xml of net,path to test data,
 return performance parameters, retrun time taken"""
 
+def loadLabels():
+    fileName=raw_input("Enter filename containing labels")
+    cleanLabels=np.load(fileName)
+    return cleanLabels['arr_0']
+
+def loadFeatures():
+    fileName=raw_input("Enter filename containing features")
+    cleanFeatures=np.load(fileName)
+    return cleanFeatures['arr_0']
 
 
 netParams=setNetParams()
 maxIter,maxError,scale=setTrainParams()
+cleanLabels=loadLabels()
+cleanFeatures=loadFeatures()
 trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures)
