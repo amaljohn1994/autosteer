@@ -34,19 +34,17 @@ def trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures):
     m=raw_input("Enter name of xml to save model(no ext. reqd):")
     model.save(m+".xml")
     print "File saved successfully..."
+    return m+".xml"
 
 
 """Write function to predict
 given path to xml of net,path to test data,
 return performance parameters, retrun time taken"""
 
-def predict():
-
-    layers=setNetParams
+def predict(fileName,layers):
     nnet=cv2.ANN_MLP()
     nnet.create(layers)
-    fileName=raw_input("Enter file name of xml(ext not reqd):")
-    nnet.load(fileName+".xml")
+    nnet.load(fileName)
     correctLabels=loadCorrectLabels()
     trainingFeatures=loadTrainingFeatures()
     for feature in trainingFeatures:
@@ -88,5 +86,7 @@ netParams=setNetParams()
 maxIter,maxError,scale=setTrainParams()
 cleanLabels=loadLabels()
 cleanFeatures=loadFeatures()
-trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures)
-predict()
+xml_name=trainNet(netParams,maxIter,maxError,scale,cleanLabels,cleanFeatures)
+number=raw_input("Enter no. of sets to predict:")
+for i in range(0,int(number)):
+    predict(xml_name,netParams)
