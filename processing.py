@@ -35,7 +35,6 @@ def cleanVideo(labelPath,featurePath,hor,ver):
     count=0
     while(cam.isOpened()):
         i=i+1
-        print i
         ret, frame = cam.read()
         if ret==True:
             gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
