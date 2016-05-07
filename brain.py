@@ -51,13 +51,17 @@ def predict(fileName,layers):
         test=test+0.00
         nnet.predict(test,prediction)
         prediction=prediction.argmax(-1)+1
-        if prediction==correctLabels[i]
+        correct=correctLabels[i].argmax(-1)+1
+        if prediction[0]==correct:
             count=count+1
-        print 'Prediction:',prediction
         i=i+1
-    print (count/i)*100
+    print "Correct Predictions: %d" %count
+    a= float((float(count)/float(i))*100)
+    print "Accuracy: %f" %a
+
 
 def loadLabels():
+
     fileName=raw_input("Enter filename containing labels(.npz reqd)):")
     cleanLabels=np.load(fileName)
     return cleanLabels['arr_0']
