@@ -5,6 +5,7 @@ import cv2
 import cv2.cv as cv
 import time
 import matplotlib.pyplot as plt
+import os
 
 def setLabel(cleanLabels,sensorLow,sensorHigh):
     print "Setting Labels..."
@@ -78,12 +79,14 @@ def cleanVideo(labelPath,featurePath,hor,ver):
     return count,cleanLabels,cleanFeatures
 
 def saveFeatures(features):
-    fileName=raw_input("Enter the filename to save features to(no ext. reqd):")
-    np.savez(fileName,features)
+    PATH="/media/hari/Windows8_OS"
+    fileName=raw_input("Enter the filename to save features to(ext. reqd):")
+    np.savez(os.path.join(PATH,fileName),features)
 
 def saveLabels(labels):
-    fileName=raw_input("Enter the filename to save labels to(no ext. reqd):")
-    np.savez(fileName,labels)
+    PATH="/media/hari/Windows8_OS"
+    fileName=raw_input("Enter the filename to save labels to(ext. reqd):")
+    np.savez(os.path.join(PATH,fileName),labels)
 
 def plot(labels):
     l=len(labels)

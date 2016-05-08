@@ -61,23 +61,34 @@ def predict(fileName,layers):
 
 
 def loadLabels():
-
-    fileName=raw_input("Enter filename containing labels(.npz reqd)):")
+    print "Select path for labels"
+    root=tk.Tk()
+    root.withdraw()
+    fileName=filedialog.askopenfilename()
     cleanLabels=np.load(fileName)
     return cleanLabels['arr_0']
 
 def loadFeatures():
-    fileName=raw_input("Enter filename containing features(.npz reqd):")
+    print "Select path for features"
+    root=tk.Tk()
+    root.withdraw()
+    fileName=filedialog.askopenfilename()
     cleanFeatures=np.load(fileName)
     return cleanFeatures['arr_0']
 
 def loadCorrectLabels():
-    fileName=raw_input("Enter filename containing correct labels(.npz reqd)):")
+    print "Select path for correct labels"
+    root=tk.Tk()
+    root.withdraw()
+    fileName=filedialog.askopenfilename()
     cleanLabels=np.load(fileName)
     return cleanLabels['arr_0']
 
 def loadTrainingFeatures():
-    fileName=raw_input("Enter filename containing training features(.npz reqd):")
+    print "Select path for training features"
+    root=tk.Tk()
+    root.withdraw()
+    fileName=filedialog.askopenfilename()
     cleanFeatures=np.load(fileName)
     return cleanFeatures['arr_0']
 
