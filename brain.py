@@ -65,32 +65,36 @@ def loadLabels():
     root=tk.Tk()
     root.withdraw()
     fileName=filedialog.askopenfilename()
-    cleanLabels=np.load(fileName)
-    return cleanLabels['arr_0']
+    cleanLabels=np.loadtxt(fileName)
+    print cleanLabels.shape
+    return cleanLabels
 
 def loadFeatures():
     print "Select path for features"
     root=tk.Tk()
     root.withdraw()
     fileName=filedialog.askopenfilename()
-    cleanFeatures=np.load(fileName)
-    return cleanFeatures['arr_0']
+    cleanFeatures=np.loadtxt(fileName)
+    print cleanFeatures.shape
+    return cleanFeatures
 
 def loadCorrectLabels():
     print "Select path for correct labels"
     root=tk.Tk()
     root.withdraw()
     fileName=filedialog.askopenfilename()
-    cleanLabels=np.load(fileName)
-    return cleanLabels['arr_0']
+    cleanLabels=np.loadtxt(fileName)
+    print cleanLabels.shape
+    return cleanLabels
 
 def loadTrainingFeatures():
     print "Select path for training features"
     root=tk.Tk()
     root.withdraw()
     fileName=filedialog.askopenfilename()
-    cleanFeatures=np.load(fileName)
-    return cleanFeatures['arr_0']
+    cleanFeatures=np.loadtxt(fileName)
+    print cleanFeatures.shape
+    return cleanFeatures
 
 netParams=setNetParams()
 maxIter,maxError,scale=setTrainParams()

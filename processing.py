@@ -81,12 +81,12 @@ def cleanVideo(labelPath,featurePath,hor,ver):
 def saveFeatures(features):
     PATH="/media/hari/Windows8_OS"
     fileName=raw_input("Enter the filename to save features to(ext. reqd):")
-    np.savez(os.path.join(PATH,fileName),features)
+    np.savetxt(os.path.join(PATH,fileName),features)
 
 def saveLabels(labels):
     PATH="/media/hari/Windows8_OS"
     fileName=raw_input("Enter the filename to save labels to(ext. reqd):")
-    np.savez(os.path.join(PATH,fileName),labels)
+    np.savetxt(os.path.join(PATH,fileName),labels)
 
 def plot(labels):
     l=len(labels)
