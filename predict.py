@@ -28,6 +28,7 @@ def predict(fileName,layers):
         test=feature.reshape((1,76800))
         test=test+0.00
         nnet.predict(test,prediction)
+        print prediction
         prediction=prediction.argmax(-1)+1
         correct=correctLabels[i].argmax(-1)+1
         if prediction[0]==correct:
@@ -37,6 +38,24 @@ def predict(fileName,layers):
     a= float((float(count)/float(i))*100)
     print "Accuracy: %f" %a
 
+def loadCorrectLabels():
+    print "Select path for correct labels"
+    root=tk.Tk()
+    root.withdraw()
+    fileName=filedialog.askopenfilename()
+    cleanLabels=np.loadtxt(fileName)
+    print cleanLabels.shape
+    return cleanLabels
+
+def loadTrainingFeatures():
+    print "Select path for training features"
+    root=tk.Tk()
+    root.withdraw()
+    fileName=filedialog.askopenfilename()
+    cleanFeatures=np.loadtxt(fileName)
+    print cleanFeatures.shape
+    return cleanFeatures
+
 def loadXml():
     print "Select path for XML File"
     root=tk.Tk()
@@ -45,6 +64,7 @@ def loadXml():
     return fileName
 
 netParams=setNetParams()
+fileName=loadXml()
 number=raw_input("Enter no. of sets to predict:")
 for i in range(0,int(number)):
-    predict(xml_name,netParams)
+    predict(fileName,netParams)
